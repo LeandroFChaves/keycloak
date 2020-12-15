@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  keycloak:
+    privileged: true
+    image: jboss/keycloak
+    ports:
+      - 8085:8080
+    volumes:
+      - /home/leandro-chaves/Documentos/temp/keycloak/standalone/configuration/standalone.xml:/opt/jboss/keycloak/standalone/configuration/standalone.xml
+      - /home/leandro-chaves/Documentos/temp/keycloak/standalone/data:/opt/jboss/keycloak/standalone/data
+      - /home/leandro-chaves/Documentos/temp/keycloak/themes:/opt/jboss/keycloak/themes/
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
