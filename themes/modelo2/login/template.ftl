@@ -22,6 +22,41 @@
           <link href="${url.resourcesPath}/${style}" rel="stylesheet" />
         </#list>
       </#if>
+
+      <!-- Extrai da URL uma parte dinamicamante no estilo freemarker. -->
+      <!--
+        Esse exemplo faz a mesma coisa que o script abaixo, porém no modo freemarker.
+      -->
+      <!--
+      <#assign ambiente = ''>
+      <#assign res = url.loginAction?matches(r".*(-[^\.]*)\.")>
+      <#list res as m>
+        <#assign ambiente = m?groups[1]>
+      </#list>
+      <link href="${properties.urlStaticResource?replace('$[ambiente]', ambiente)}/${realm.name}/keycloak/login.css" rel="stylesheet" />
+      -->
+
+      <!-- Exemplo de script com regex para extrair uma parte da URL -->
+      <!-- 
+        O script abaixo injeta na página um link href que é montado dinamicamente extraindo da url (sudmodimio)
+        uma parte da mesma. Por exemplo, teste-qa.dominio.com.br será extraído o -qa
+      -->
+      <!--
+      <script>
+        let regex = new RegExp(".*(-[^\.]*)\.");
+        let subDominio = window.location.hostname;
+        let arr = regex.exec(subDominio);
+        let ambiente = '';
+        let urlStatic = '${properties.urlStaticResource}';
+        
+        if (arr !== null && arr !== undefined) {
+          ambiente = arr[1];
+          urlStatic = urlStatic.replace('$[ambiente]', ambiente);
+        }
+
+        document.write('<link href='.concat(urlStatic, '/${realm.name}/keycloak/login.css', '"', ' rel="stylesheet"', ' />'));
+      </script>
+       -->
     </head>
 
     <body>
