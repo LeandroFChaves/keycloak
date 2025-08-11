@@ -3,14 +3,29 @@ version: '3.4'
 services:
   keycloak:
     privileged: true
-    image: jboss/keycloak
+    image: quay.io/keycloak/keycloak:21.1.2
     ports:
-      - 8085:8080
+      - '9090:9090'
+    networks:
+      - local-network
     volumes:
-      - ./standalone/configuration/standalone.xml:/opt/jboss/keycloak/standalone/configuration/standalone.xml
-      - ./standalone/data:/opt/jboss/keycloak/standalone/data
-      - ./themes:/opt/jboss/keycloak/themes/
+#      - ./standalone/configuration/standalone.xml:/opt/keycloak/standalone/configuration/standalone.xml
+#      - ./standalone/data:/opt/keycloak/standalone/data
+      - ./themes:/opt/keycloak/themes/
     environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
-      - DB_VENDOR=h2
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_PROXY=passthrough
+      - KC_HTTP_ENABLED=true
+      - KC_HOSTNAME=localhost:9090
+      - KC_HTTP_PORT=9090
+      - KC_HTTP_RELATIVE_PATH=/
+      - KC_HOSTNAME_STRICT_BACKCHANNEL=false
+      - KC_HOSTNAME_STRICT=true
+      - KC_HOSTNAME_STRICT_HTTPS=false
+      - KC_HEALTH_ENABLED=true    
+    command: start-dev
+
+networks: 
+  local-network:
+    driver: bridge
