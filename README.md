@@ -4,4 +4,4 @@ docker-compose para subir keycloak localmente externalizando as configs, themes 
 
 Exemplo de chamada para a pagina de login:
 
-http://localhost:8085/auth/realms/sample/protocol/openid-connect/auth?client_id=sample-ui&redirect_uri=http%3A%2F%2Flocalhost:4200&response_type=code&scope=openid
+http://localhost:9090/realms/master/protocol/openid-connect/auth?client_id=sample-ui&redirect_uri=http%3A%2F%2Flocalhost:4200&response_type=code&scope=openid
